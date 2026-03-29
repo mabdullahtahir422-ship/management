@@ -3,6 +3,7 @@ package com.portfolio.portfolioapp.service;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.time.LocalDate;
 
 import com.portfolio.portfolioapp.entity.Project;
 import com.portfolio.portfolioapp.repository.ProjectRepository;
@@ -15,11 +16,44 @@ public class ProjectService {
 
     // Show all projects
     public List<Project> listAll() {
-        return projectRepository.findAll();
+        List<Project> projects = projectRepository.findAll();
+
+        // Auto update status when listing projects
+        LocalDate today = LocalDate.now();
+
+        for (Project project : projects) {
+
+            if (project.getEndDate() != null && today.isAfter(project.getEndDate())) {
+                project.setStatus("Completed");
+            }
+            else if (project.getStartDate() != null &&
+                    (today.isEqual(project.getStartDate()) || today.isAfter(project.getStartDate()))) {
+                project.setStatus("Active");
+            }
+            else {
+                project.setStatus("Pending");
+            }
+        }
+
+        return projects;
     }
 
-    // Save project
+    // Save project (Auto status set)
     public void save(Project project) {
+
+        LocalDate today = LocalDate.now();
+
+        if (project.getEndDate() != null && today.isAfter(project.getEndDate())) {
+            project.setStatus("Completed");
+        }
+        else if (project.getStartDate() != null &&
+                (today.isEqual(project.getStartDate()) || today.isAfter(project.getStartDate()))) {
+            project.setStatus("Active");
+        }
+        else {
+            project.setStatus("Pending");
+        }
+
         projectRepository.save(project);
     }
 
@@ -44,5 +78,4 @@ public class ProjectService {
     public long countProjectsByStatus(String status) {
         return projectRepository.countByStatus(status);
     }
-
 }
