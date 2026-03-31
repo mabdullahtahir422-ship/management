@@ -1,11 +1,10 @@
 package com.portfolio.portfolioapp.controller;
 
+import com.portfolio.portfolioapp.service.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-
-import com.portfolio.portfolioapp.service.ProjectService;
 
 @Controller
 public class MainController {
@@ -14,6 +13,11 @@ public class MainController {
     private ProjectService projectService;
 
     @GetMapping("/")
+    public String home() {
+        return "redirect:/login";
+    }
+
+    @GetMapping("/dashboard")
     public String dashboard(Model model) {
 
         long totalProjects = projectService.countTotalProjects();

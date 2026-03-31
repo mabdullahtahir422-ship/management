@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - Portfolio System</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Glass Card */
+        .container {
+            width: 420px;
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 30px rgba(0,255,255,0.3);
+            backdrop-filter: blur(15px);
+            color: white;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Neon Border */
+        .container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(135deg, cyan, blue);
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+
+            pointer-events: none; /* 🔥 FIX */
+            z-index: 0;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+
+        .role-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .role-buttons button {
+            width: 48%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .admin-btn {
+            background: #ff4b5c;
+            color: white;
+        }
+
+        .user-btn {
+            background: #00c9a7;
+            color: white;
+        }
+
+        .role-buttons button:hover {
+            transform: scale(1.05);
+        }
+
+        #loginType {
+            margin-bottom: 15px;
+            color: cyan;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-bottom: 2px solid cyan;
+            background: transparent;
+            color: white;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, cyan, #00bcd4);
+            border: none;
+            border-radius: 25px;
+            margin-top: 15px;
+            font-size: 16px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            box-shadow: 0 0 15px cyan;
+            transform: scale(1.05);
+        }
+
+        .signup-link {
+            margin-top: 15px;
+            display: block;
+            color: cyan;
+            text-decoration: none;
+        }
+
+        .signup-link:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            color: #00ffcc;
+            margin-bottom: 10px;
+        }
+
+        .info {
+            color: orange;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="title">Portfolio System</div>
+    <div class="subtitle">Secure Login Portal</div>
+
+    <!-- Role Selection -->
+    <div class="role-buttons">
+        <button type="button" class="admin-btn" onclick="setAdmin()">Admin Login</button>
+        <button type="button" class="user-btn" onclick="setUser()">User Login</button>
+    </div>
+
+    <div id="loginType"><b>User Login</b></div>
+
+    <!-- Messages -->
+    <div th:if="${param.error}" class="error">
+        Invalid username or password
+    </div>
+
+    <div th:if="${param.notapproved}" class="info">
+        Wait for admin approval
+    </div>
+
+    <div th:if="${param.registered}" class="success">
+        Signup successful. Wait for admin approval.
+    </div>
+
+    <div th:if="${param.logout}" class="success">
+        Logged out successfully
+    </div>
+
+    <!-- Login Form -->
+    <form th:action="@{/login}" method="post">
+
+        <!-- hidden login type -->
+        <input type="hidden" name="loginType" id="loginTypeInput" value="USER">
+
+        <input type="text" name="username" placeholder="Enter Email / Username" required>
+
+        <input type="password" name="password" placeholder="Enter Password" required>
+
+        <button type="submit" class="login-btn">Login</button>
+
+    </form>
+
+    <a class="signup-link" th:href="@{/signup}">
+        New user? Signup here
+    </a>
+
+</div>
+
+<script>
+    function setAdmin() {
+        document.getElementById("loginType").innerHTML = "<b>Admin Login</b>";
+        document.getElementById("loginTypeInput").value = "ADMIN";
+    }
+
+    function setUser() {
+        document.getElementById("loginType").innerHTML = "<b>User Login</b>";
+        document.getElementById("loginTypeInput").value = "USER";
+    }
+</script>
+
+</body>
+</html>

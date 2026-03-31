@@ -6,82 +6,105 @@
   <style>
 
     body{
-    font-family: Arial;
-    background:#e5e7eb;
-    margin:0;
-    padding:0;
-    text-align:center;
+      margin:0;
+      font-family:'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+      text-align:center;
+      color:white;
     }
 
     /* Header */
 
     .header{
-    background:#34495e;
-    color:white;
-    padding:30px;
-    font-size:32px;
-    font-weight:bold;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      padding:30px;
+      font-size:32px;
+      font-weight:bold;
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
     }
 
-    /* Cards */
+    /* Cards Layout */
 
     .cards{
-    display:flex;
-    justify-content:center;
-    gap:40px;
-    margin-top:50px;
+      display:flex;
+      justify-content:center;
+      gap:40px;
+      margin-top:50px;
+      flex-wrap: wrap;
     }
 
+    /* Card */
+
     .card{
-    width:300px;
-    height:180px;
-    border-radius:15px;
-    color:white;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    font-size:22px;
-    font-weight:bold;
+      position:relative;
+      z-index:1;
+      width:300px;
+      height:180px;
+      border-radius:20px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(15px);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      font-size:22px;
+      font-weight:bold;
+      box-shadow: 0 0 25px rgba(0,255,255,0.2);
+    }
+
+    /* Neon Border */
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:20px;
+      padding:2px;
+      background: linear-gradient(135deg, cyan, blue);
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+
+      pointer-events:none; /* 🔥 IMPORTANT FIX */
+      z-index:0;
     }
 
     .card span{
-    font-size:45px;
-    margin-top:15px;
+      font-size:45px;
+      margin-top:15px;
+      color:cyan;
     }
-
-    .blue{background:#3b82c4;}
-    .green{background:#33c16d;}
-    .orange{background:#e67e22;}
 
     /* Buttons */
 
     .buttons{
-    margin-top:50px;
+      margin-top:50px;
     }
 
     .buttons a{
-    text-decoration:none;
-    margin:5px;
+      text-decoration:none;
+      margin:5px;
     }
 
     .buttons button{
-    padding:12px 20px;
-    border:none;
-    border-radius:6px;
-    color:white;
-    font-size:15px;
-    cursor:pointer;
+      padding:12px 20px;
+      border:none;
+      border-radius:25px;
+      font-size:15px;
+      cursor:pointer;
+      font-weight:bold;
+      background: linear-gradient(90deg, cyan, #00bcd4);
+      color:black;
+      transition:0.3s;
     }
 
-    /* Button Colors */
-
-    .projects{background:#3498db;}
-    .clients{background:#9b59b6;}
-    .companies{background:#16a085;}
-    .expenses{background:#e67e22;}
-    .transactions{background:#e74c3c;}
-    .users{background:#2c3e50;}
+    .buttons button:hover{
+      box-shadow: 0 0 15px cyan;
+      transform: scale(1.05);
+    }
 
   </style>
 

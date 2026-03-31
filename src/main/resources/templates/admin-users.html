@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Panel</title>
+
+    <style>
+
+        body{
+            margin:0;
+            font-family:Arial;
+            background:#eef2f7;
+        }
+
+        .navbar{
+            background:#1f3c88;
+            color:white;
+            padding:15px 30px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .navbar h2{
+            margin:0;
+        }
+
+        .dashboard-btn{
+            background:#39a0ed;
+            padding:8px 15px;
+            border-radius:6px;
+            text-decoration:none;
+            color:white;
+        }
+
+        .container{
+            width:85%;
+            margin:40px auto;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        th, td{
+            padding:12px;
+            border-bottom:1px solid #ddd;
+            text-align:center;
+        }
+
+        th{
+            background:#1f3c88;
+            color:white;
+        }
+
+        .approve{
+            background:#1dd1a1;
+            padding:6px 14px;
+            color:white;
+            border-radius:5px;
+            text-decoration:none;
+        }
+
+        .approve:hover{
+            background:#10ac84;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Admin Panel</h2>
+    <a th:href="@{/dashboard}" class="dashboard-btn">Dashboard</a>
+</div>
+
+<div class="container">
+
+    <h3>Pending User Requests</h3>
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+
+            <td>
+                <a th:href="@{/admin/approve/{id}(id=${user.id})}" class="approve">
+                    Approve
+                </a>
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+
+</body>
+</html>
