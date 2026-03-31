@@ -12,26 +12,28 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
+                // CSRF disable (forms ke liye easy)
                 .csrf(csrf -> csrf.disable())
 
+                // Sab pages allow (login controller handle karega)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/signup").permitAll()
-                        .requestMatchers("/admin/**").permitAll()
-                        .requestMatchers("/dashboard").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(
+                                "/",
+                                "/login",
+                                "/signup",
+                                "/dashboard",
+                                "/admin/**",
+                                "/css/**",
+                                "/js/**"
+                        ).permitAll()
+                        .anyRequest().permitAll()
                 )
 
-                .formLogin(login -> login
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/dashboard", true)
-                        .permitAll()
-                )
+                // Spring Security ka login disable
+                .formLogin(login -> login.disable())
 
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
-                );
+                // Logout bhi disable (hum session se handle karenge)
+                .logout(logout -> logout.disable());
 
         return http.build();
     }
