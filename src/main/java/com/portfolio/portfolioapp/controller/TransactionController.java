@@ -22,7 +22,7 @@ public class TransactionController {
     @GetMapping("/transactions/new")
     public String showNewTransactionForm(Model model) {
         model.addAttribute("transaction", new Transaction());
-        return "ADD Transaction";
+        return "add-Transaction";
     }
 
     @PostMapping("/transactions/save")
