@@ -2,106 +2,193 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Project List</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
+
+        .header {
+            text-align: center;
+            padding: 25px;
+            font-size: 30px;
+            font-weight: bold;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            margin-top: 30px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            background: linear-gradient(90deg, cyan, #00bcd4);
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px cyan;
+        }
+
+        /* Forms */
+        .form-box {
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        input {
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            margin: 5px;
+            background: #1e293b;
+            color: white;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255,255,255,0.05);
+        }
+
+        tr:hover {
+            background: rgba(0,255,255,0.2);
+            transition: 0.3s;
+        }
+
+        /* Highlight searched row */
+        .highlight {
+            background-color: yellow !important;
+            color: black;
+            font-weight: bold;
+        }
+
+    </style>
 </head>
 <body>
 
-<h2>Project List</h2>
+<div class="header">Project List</div>
 
-<a href="/projects/new">
-    <button>Add New Project</button>
-</a>
+<div class="container">
 
-<br><br>
+    <!-- Add Button -->
+    <a href="/projects/new">
+        <button class="btn">+ Add New Project</button>
+    </a>
 
-<!-- EDIT BY ID -->
-<h3>Edit Project</h3>
-<form action="/projects/edit" method="get">
-    Enter Project ID:
-    <input type="number" name="id" required>
-    <button type="submit">Edit</button>
-</form>
+    <!-- Forms -->
+    <div class="form-box">
+        <h3>Edit Project</h3>
+        <form action="/projects/edit" method="get">
+            <input type="number" name="id" placeholder="Project ID" required>
+            <button class="btn">Edit</button>
+        </form>
+    </div>
 
-<br>
+    <div class="form-box">
+        <h3>Delete Project</h3>
+        <form action="/projects/delete" method="get">
+            <input type="number" name="id" placeholder="Project ID" required>
+            <button class="btn">Delete</button>
+        </form>
+    </div>
 
-<!-- DELETE BY ID -->
-<h3>Delete Project</h3>
-<form action="/projects/delete" method="get">
-    Enter Project ID:
-    <input type="number" name="id" required>
-    <button type="submit">Delete</button>
-</form>
+    <div class="form-box">
+        <h3>Search Project</h3>
+        <form action="/projects/search" method="get">
+            <input type="number" name="id" placeholder="Project ID" required>
+            <button class="btn">Search</button>
+        </form>
+    </div>
 
-<br>
+    <br>
 
-<!-- SEARCH BY ID -->
-<h3>Search Project By ID</h3>
-<form action="/projects/search" method="get">
-    <input type="number" name="id" placeholder="Enter Project ID" required>
-    <button type="submit">Search</button>
-</form>
+    <a href="/">
+        <button class="btn">🏠 Go To Dashboard</button>
+    </a>
 
-<br><br>
+    <!-- Table -->
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Company</th>
+            <th>Client</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Budget</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+        </thead>
 
-<a href="/">
-    <button>Go To Main Page</button>
-</a>
+        <tbody>
+        <tr th:each="project : ${projects}"
+            th:id="'row-' + ${project.id}"
+            th:classappend="${project.id == searchId} ? 'highlight' : ''">
 
-<br><br>
+            <td th:text="${project.id}"></td>
+            <td th:text="${project.companyId}"></td>
+            <td th:text="${project.clientId}"></td>
+            <td th:text="${project.projectName}"></td>
+            <td th:text="${project.description}"></td>
+            <td th:text="${project.status}"></td>
+            <td th:text="${project.budget}"></td>
+            <td th:text="${project.startDate}"></td>
+            <td th:text="${project.endDate}"></td>
+        </tr>
+        </tbody>
+    </table>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Company ID</th>
-        <th>Client ID</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th>Budget</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-    </tr>
-    </thead>
+</div>
 
-    <tbody>
-
-    <tr th:each="project : ${projects}"
-        th:id="'row-' + ${project.id}"
-        th:style="${project.id == searchId} ? 'background-color:yellow' : ''">
-
-        <td th:text="${project.id}"></td>
-        <td th:text="${project.companyId}"></td>
-        <td th:text="${project.clientId}"></td>
-        <td th:text="${project.projectName}"></td>
-        <td th:text="${project.description}"></td>
-        <td th:text="${project.status}"></td>
-        <td th:text="${project.budget}"></td>
-        <td th:text="${project.startDate}"></td>
-        <td th:text="${project.endDate}"></td>
-
-    </tr>
-
-    </tbody>
-</table>
-
-
-<!-- AUTO SCROLL TO SEARCHED ROW -->
-
+<!-- Auto Scroll -->
 <script th:if="${searchId != null}">
     window.onload = function() {
-
         var row = document.getElementById("row-" + [[${searchId}]]);
-
         if(row){
             row.scrollIntoView({
                 behavior: "smooth",
                 block: "center"
             });
         }
-
     };
 </script>
-
 
 </body>
 </html>
