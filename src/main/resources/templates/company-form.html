@@ -2,39 +2,154 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add Company</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 30px;
+            font-size: 32px;
+            font-weight: bold;
+            background: rgba(0,0,0,0.4);
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        /* Card */
+        .card {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 20px;
+            width: 400px;
+            box-shadow: 0 0 20px rgba(0,255,255,0.3);
+            border: 2px solid rgba(0,255,255,0.4);
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Inputs */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            background: #1e293b;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border: 2px solid cyan;
+        }
+
+        /* Button */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(90deg, cyan, #00bcd4);
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px cyan;
+        }
+
+        /* Back link */
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: cyan;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Add Company</h2>
+<div class="header">
+    Add Company
+</div>
 
-<form th:action="@{/companies/save}" th:object="${company}" method="post">
+<div class="container">
+    <div class="card">
 
-    <label>User ID:</label>
-    <input type="number" th:field="*{userId}" placeholder="Enter User ID" required/>
-    <br/><br/>
+        <h2>Add Company</h2>
 
-    <label>Company Name:</label>
-    <input type="text" th:field="*{companyName}" placeholder="Enter Company Name" required/>
-    <br/><br/>
+        <form th:action="@{/companies/save}" th:object="${company}" method="post">
 
-    <label>Owner Name:</label>
-    <input type="text" th:field="*{ownerName}" placeholder="Enter Owner Name" required/>
-    <br/><br/>
+            <div class="form-group">
+                <label>User ID:</label>
+                <input type="number" th:field="*{userId}" placeholder="Enter User ID" required/>
+            </div>
 
-    <label>Email:</label>
-    <input type="email" th:field="*{email}" placeholder="Enter Email"/>
-    <br/><br/>
+            <div class="form-group">
+                <label>Company Name:</label>
+                <input type="text" th:field="*{companyName}" placeholder="Enter Company Name" required/>
+            </div>
 
-    <label>Phone:</label>
-    <input type="text" th:field="*{phone}" placeholder="Enter Phone"/>
-    <br/><br/>
+            <div class="form-group">
+                <label>Owner Name:</label>
+                <input type="text" th:field="*{ownerName}" placeholder="Enter Owner Name" required/>
+            </div>
 
-    <button type="submit">Save Company</button>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" th:field="*{email}" placeholder="Enter Email"/>
+            </div>
 
-</form>
+            <div class="form-group">
+                <label>Phone:</label>
+                <input type="text" th:field="*{phone}" placeholder="Enter Phone"/>
+            </div>
 
-<br/>
-<a th:href="@{/companies}">Back to Company List</a>
+            <button type="submit" class="btn">Save Company</button>
+
+        </form>
+
+        <a th:href="@{/companies}" class="back">⬅ Back to Company List</a>
+
+    </div>
+</div>
 
 </body>
 </html>
