@@ -1,23 +1,140 @@
-<!-- company-list.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Companies List</title></head>
+<head>
+  <title>Company List</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #e0fbfc;
+      text-align: center;
+    }
+
+    .action-container {
+      width: 100%;
+      max-width: 950px;
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .btn-add {
+      background: linear-gradient(90deg, cyan, #00bcd4);
+      color: #0b132b;
+      padding: 10px 22px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn-add:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px cyan;
+    }
+
+    .table-container {
+      width: 100%;
+      max-width: 950px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(0, 255, 255, 0.4);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 15px 20px;
+    }
+
+    th {
+      background-color: rgba(0, 0, 0, 0.8);
+      color: cyan;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+    }
+
+    tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background-color 0.2s ease;
+    }
+
+    tr:last-child {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background-color: rgba(0, 255, 255, 0.05);
+    }
+
+    td {
+      font-size: 14px;
+      color: #e0fbfc;
+    }
+  </style>
+</head>
 <body>
+
 <h2>Companies</h2>
-<table border="1">
-  <tr>
-    <th>ID</th><th>User ID</th><th>Name</th><th>Owner</th><th>Email</th><th>Phone</th><th>Created At</th>
-  </tr>
-  <tr th:each="company : ${companies}">
-    <td th:text="${company.id}">1</td>
-    <td th:text="${company.userId}">1</td>
-    <td th:text="${company.companyName}">Acme Corp</td>
-    <td th:text="${company.ownerName}">John Doe</td>
-    <td th:text="${company.email}">john@acme.com</td>
-    <td th:text="${company.phone}">555-1234</td>
-    <td th:text="${company.createdAt}">2023-01-01T12:00</td>
-  </tr>
-</table>
-<a th:href="@{/companies/new}">Add New Company</a>
+
+<div class="action-container">
+  <a class="btn-add" th:href="@{/companies/new}">+ Add New Company</a>
+</div>
+
+<div class="table-container">
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>User ID</th>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Created At</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="company : ${companies}">
+      <td th:text="${company.id}">1</td>
+      <td th:text="${company.userId}">1</td>
+      <td th:text="${company.companyName}">TechCorp</td>
+      <td th:text="${company.ownerName}">Ali</td>
+      <td th:text="${company.email}">ali@corp.com</td>
+      <td th:text="${company.phone}">123456789</td>
+      <td th:text="${company.createdAt}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
 </body>
 </html>
