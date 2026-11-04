@@ -1,21 +1,137 @@
-<!-- user-list.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Users List</title></head>
+<head>
+    <title>Users List</title>
+    <style>
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: linear-gradient(135deg, #0b132b, #1c2541, #3a506b);
+          color: #ffffff;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 40px 20px;
+          box-sizing: border-box;
+        }
+
+        h2 {
+          margin-bottom: 25px;
+          font-size: 32px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          color: #e0fbfc;
+          text-align: center;
+        }
+
+        .action-container {
+          width: 100%;
+          max-width: 900px;
+          display: flex;
+          justify-content: flex-start;
+          margin-bottom: 20px;
+        }
+
+        .btn-add {
+          background: #00d2d3;
+          color: #0b132b;
+          padding: 10px 22px;
+          border-radius: 20px;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: bold;
+          box-shadow: 0 4px 12px rgba(0, 210, 211, 0.3);
+          transition: all 0.3s ease;
+          display: inline-block;
+        }
+
+        .btn-add:hover {
+          background: #00b4d8;
+          box-shadow: 0 6px 16px rgba(0, 210, 211, 0.5);
+          transform: translateY(-1px);
+        }
+
+        .table-container {
+          width: 100%;
+          max-width: 900px;
+          background-color: rgba(18, 30, 49, 0.85);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 14px;
+          overflow: hidden;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(8px);
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          text-align: left;
+        }
+
+        th, td {
+          padding: 15px 20px;
+        }
+
+        th {
+          background-color: rgba(27, 38, 59, 0.95);
+          color: #00d2d3;
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          border-bottom: 1px solid #415a77;
+        }
+
+        tr {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          transition: background-color 0.2s ease;
+        }
+
+        tr:last-child {
+          border-bottom: none;
+        }
+
+        tr:hover {
+          background-color: rgba(27, 38, 59, 0.5);
+        }
+
+        td {
+          font-size: 14px;
+          color: #e0fbfc;
+        }
+    </style>
+</head>
 <body>
-<h2>Users</h2>
-<table border="1">
-    <tr>
-        <th>ID</th><th>Name</th><th>Email</th><th>Password</th><th>Created At</th>
-    </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}">1</td>
-        <td th:text="${user.name}">Alice</td>
-        <td th:text="${user.email}">alice@example.com</td>
-        <td th:text="${user.password}">******</td>
-        <td th:text="${user.createdAt}"></td>
-    </tr>
-</table>
-<a th:href="@{/users/new}">Add New User</a>
+
+<h2>Users List</h2>
+
+<div class="action-container">
+    <a class="btn-add" th:href="@{/users/new}">+ Add New User</a>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Created At</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.name}">Alice</td>
+            <td th:text="${user.email}">alice@example.com</td>
+            <td th:text="${user.password}">******</td>
+            <td th:text="${user.createdAt}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
